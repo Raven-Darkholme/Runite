@@ -16,6 +16,37 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Фоновые иконки */
+        .bg-icons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-icon {
+            position: absolute;
+            fill: white;
+            opacity: 0.05;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        /* Контент поверх фона */
+        h1, .download-grid, .back-link {
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
@@ -25,24 +56,27 @@
             text-shadow: 0 0 20px rgba(255, 217, 102, 0.4);
             margin-bottom: 50px;
             transform: skew(-5deg);
+            text-align: center;
         }
 
         .download-grid {
             display: flex;
             gap: 40px;
             perspective: 1000px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        /* Стиль многоугольника (Гексагон) */
         .hex-wrapper {
             text-decoration: none;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block;
         }
 
         .hexagon {
             width: 200px;
             height: 220px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             display: flex;
             align-items: center;
@@ -53,10 +87,9 @@
             backdrop-filter: blur(10px);
         }
 
-        /* Цвета для каждого магазина */
-        .google { background: linear-gradient(135deg, #34a85322, #4285f444); border-bottom: 4px solid #34a853; }
-        .apple { background: linear-gradient(135deg, #55555544, #00000066); border-bottom: 4px solid #ffffff; }
-        .nintendo { background: linear-gradient(135deg, #e6001222, #e6001266); border-bottom: 4px solid #e60012; }
+        .google { background: linear-gradient(135deg, #34a85311, #4285f422); border-bottom: 4px solid #34a853; }
+        .apple { background: linear-gradient(135deg, #55555522, #00000033); border-bottom: 4px solid #ffffff; }
+        .nintendo { background: linear-gradient(135deg, #e6001211, #e6001222); border-bottom: 4px solid #e60012; }
 
         .hexagon svg {
             width: 80px;
@@ -65,7 +98,6 @@
             transition: transform 0.4s ease;
         }
 
-        /* Ховер-эффекты */
         .hex-wrapper:hover {
             transform: translateY(-15px) scale(1.1) rotateY(10deg);
         }
@@ -73,10 +105,6 @@
         .hex-wrapper:hover .hexagon {
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .hex-wrapper:hover svg {
-            transform: scale(1.2);
         }
 
         .platform-name {
@@ -101,19 +129,32 @@
             transition: 0.3s;
         }
 
-        .back-link:hover {
-            background: #ff7a18;
-            color: white;
+        .back-link:hover { background: #ff7a18; color: white; }
+
+        @media (max-width: 768px) {
+            body { overflow-y: auto; justify-content: flex-start; padding-top: 40px; }
+            h1 { font-size: 1.8rem; }
+            .download-grid { flex-direction: column; gap: 30px; }
+            .hexagon { width: 160px; height: 180px; }
+            .hexagon svg { width: 60px; height: 60px; }
+            .hex-wrapper:hover { transform: translateY(-5px) scale(1.05); }
         }
     </style>
 </head>
 <body>
 
+    <!-- Фоновые иконки -->
+    <div class="bg-icons">
+        <svg class="bg-icon" style="left: 10%; width: 100px; animation-duration: 25s;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        <svg class="bg-icon" style="left: 30%; width: 60px; animation-duration: 18s; animation-delay: -5s;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        <svg class="bg-icon" style="left: 60%; width: 120px; animation-duration: 30s; animation-delay: -2s;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+        <svg class="bg-icon" style="left: 85%; width: 80px; animation-duration: 22s; animation-delay: -10s;" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    </div>
+
     <h1>ВЫБЕРИ ПЛАТФОРМУ</h1>
 
     <div class="download-grid">
-        <!-- GOOGLE PLAY -->
-        <a href="https://play.google.com/store/apps/details?id=jp.pokemon.pokemonunite" class="hex-wrapper" target="_blank">
+        <a href="https://google.com" class="hex-wrapper" target="_blank">
             <div class="hexagon google">
                 <svg viewBox="0 0 640 640">
                     <path fill="#FF3B30" d="M389.6 298.3L168.9 77L449.7 238.2L389.6 298.3z"/>
@@ -125,18 +166,16 @@
             <span class="platform-name">Android</span>
         </a>
 
-        <!-- APPLE APP STORE -->
-        <a href="https://apps.apple.com/us/app/pok%C3%A9mon-unite/id1512321575" class="hex-wrapper" target="_blank">
-        <div class="hexagon apple">
-              <svg viewBox="0 0 640 640">
+        <a href="https://apple.com" class="hex-wrapper" target="_blank">
+            <div class="hexagon apple">
+                <svg viewBox="0 0 640 640">
                     <path fill="white" d="M496 96L144 96C117.5 96 96 117.5 96 144L96 496C96 522.5 117.5 544 144 544L496 544C522.5 544 544 522.5 544 496L544 144C544 117.5 522.5 96 496 96zM223 448.5C217.5 458.1 205.2 461.3 195.7 455.8C186.1 450.3 182.9 438 188.4 428.5L202.7 403.8C218.8 398.9 232 402.7 242.3 415.2L223 448.5zM361.9 394.6L180 394.6C169 394.6 160 385.6 160 374.6C160 363.6 169 354.6 180 354.6L231 354.6L296.4 241.4L275.9 206C270.4 196.4 273.7 184.2 283.2 178.7C292.8 173.2 305 176.5 310.5 186L319.4 201.4L328.3 186C333.8 176.4 346.1 173.2 355.6 178.7C365.2 184.2 368.4 196.5 362.9 206L277.1 354.6L339.2 354.6C359.4 354.6 370.7 378.3 361.9 394.6zM460 394.6L431 394.6L450.6 428.5C456.1 438.1 452.8 450.3 443.3 455.8C433.7 461.3 421.5 458 416 448.5C383.1 391.6 358.5 348.8 342 320.4C325.3 291.4 337.2 262.4 349.1 252.6C362.2 275.3 381.8 309.3 408 354.6L460 354.6C471 354.6 480 363.6 480 374.6C480 385.7 471 394.6 460 394.6z"/>
                 </svg>
-        </div>
-        <span class="platform-name">iOS</span>
-    </a>
+            </div>
+            <span class="platform-name">iOS</span>
+        </a>
 
-        <!-- NINTENDO SWITCH -->
-        <a href="https://www.nintendo.com/us/store/products/pokemon-unite-switch/" class="hex-wrapper" target="_blank">
+        <a href="https://nintendo.com" class="hex-wrapper" target="_blank">
             <div class="hexagon nintendo">
                 <svg viewBox="0 0 512 512">
                     <path fill="#E60012" d="M152 40c-66 0-120 54-120 120v192c0 66 54 120 120 120h40V40h-40zm0 160c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40-17.9 40-40 40zM320 40h40c66 0 120 54 120 120v192c0 66-54 120-120 120h-40V40zm40 272c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40z"/>
@@ -148,6 +187,5 @@
 
     <a href="index.html" class="back-link">ГЛАВНАЯ СТРАНИЦА</a>
 
-
- </body>
+</body>
 </html>
